@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Usager;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class UsagersController extends Controller
 {
-    
+
     public function index()
     {
         return view('usagers.index');
@@ -35,6 +37,30 @@ class UsagersController extends Controller
 
     public function account()
     {
-        return view('usagers.account');
+        $usagers = Usager::all();
+        return view('usagers.account', compact('usagers'));
+    }
+
+    public function create()
+    {
+        return view('usagers.ajouter');
+    }
+
+    public function store(Request $request)
+    {
+        try {
+            $usager = new Usager();
+            $usager->email = $request->email;
+            $usager->nomUsager = $request->nomUsager;
+            $usager->nom = $request->nom;
+            $usager->prenom = $request->prenom;
+            $usager->role = $request->role;
+            $usager->password = bcrypt($request->password);
+            $usager->save();
+        } catch (\Throwable $e) {
+            Log::debug($e);
+            return redirect()->back()->withInput()->withErrors(['error' => "Une erreur s'est produite pendant la création du compte"]);
+        }
+        return redirect()->route('usagers.account');
     }
 }

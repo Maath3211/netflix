@@ -65,3 +65,9 @@ Route::post('/login',
 
 Route::post('/logout',
 [UsagersController::class, 'logout'])->name('logout');
+
+Route::get('/createaccount',
+[UsagersController::class, 'create'])->name('usagers.create');
+
+Route::post('/storeaccount',
+[UsagersController::class, 'store'])->name('usagers.store');

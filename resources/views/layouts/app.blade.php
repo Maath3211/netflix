@@ -49,10 +49,7 @@
         </header>
         <!-- END OF HEADER -->
 
-
-
-        @yield('contenu')
-
+        <h1></h1>
         <div id="container" class="container-fluid ">
             <div class="row text-center ">
                 <div class="col-2 offset-5">
@@ -67,6 +64,11 @@
                 </div>
             </div>
         </div>
+
+
+        @yield('contenu')
+
+       
 
 
 
