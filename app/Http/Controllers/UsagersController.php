@@ -63,4 +63,30 @@ class UsagersController extends Controller
         }
         return redirect()->route('usagers.account');
     }
+
+    public function edit(string $id)
+    {
+        $usager = Usager::find($id);
+        return view('usagers.modifier', compact('usager'));
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $usager = Usager::find($id);
+        $usager->email = $request->email;
+        $usager->nomUsager = $request->nomUsager;
+        $usager->nom = $request->nom;
+        $usager->prenom = $request->prenom;
+        $usager->role = $request->role;
+        $usager->password = bcrypt($request->password);
+        $usager->save();
+        return redirect()->route('usagers.account');
+    }
+
+    public function destroy(string $id)
+    {
+        $usager = Usager::find($id);
+        $usager->delete();
+        return redirect()->route('usagers.account');
+    }
 }

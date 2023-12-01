@@ -29,7 +29,7 @@
                                             Nom: {{ $usager->nom }}<br>
                                             Prénom: {{ $usager->prenom }}<br>
                                             Rôle: {{ $usager->role }}<br>
-                                            <a href=""><button type="button" class="btn btn-dark">Modifier</button></a>
+                                            <a href="{{ route('usagers.edit', $usager->id ) }}"><button type="button" class="btn btn-dark">Modifier</button></a><br>
                                         </p>
                                     @endforeach
                                 @endif

@@ -71,3 +71,12 @@ Route::get('/createaccount',
 
 Route::post('/storeaccount',
 [UsagersController::class, 'store'])->name('usagers.store');
+
+Route::get('/editaccount/{usager}',
+[UsagersController::class, 'edit'])->name('usagers.edit');
+
+Route::patch('/editaccount/{usager}',
+[UsagersController::class, 'update'])->name('usagers.patch');
+
+Route::delete('/destroyaccount/{usager}',
+[UsagersController::class, 'destroy'])->name('usagers.destroy');
