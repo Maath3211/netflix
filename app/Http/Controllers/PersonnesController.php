@@ -8,6 +8,8 @@ use App\Models\Film;
 use App\Models\Personne;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\File;
+
 
 class PersonnesController extends Controller
 {
@@ -35,6 +37,16 @@ class PersonnesController extends Controller
     {
         try {
             $personne = new Personne($request->all());
+            $uploadedFile  =  $request->file('photo');
+            $nomFichierUnique  =  '/img/personnes/' . str_replace('  ',  '_',  $personne->nom)  .  '-'  .  uniqid()  .  '.'  .  $uploadedFile->extension();
+
+            try {
+                $request->photo->move(public_path('img/personnes'),  $nomFichierUnique);
+            } catch (\Symfony\Component\HttpFoundation\File\Exception\FileException  $e) {
+                Log::error("Erreur  lors  du  téléversement  du  fichier.  ",  [$e]);
+            }
+
+            $personne->photo  =  $nomFichierUnique;
             $personne->save();
         } catch (\Throwable $e) {
             Log::debug($e);
@@ -72,10 +84,28 @@ class PersonnesController extends Controller
         $personne->nom = $request->nom;
         $personne->date = $request->date;
         $personne->sexe = $request->sexe;
-        $personne->photo = $request->photo;
         $personne->realisateur = $request->realisateur == 1 ? $request->realisateur : 0;
         $personne->producteur = $request->producteur == 1 ? $request->producteur : 0;
         $personne->acteur = $request->acteur == 1 ? $request->acteur : 0;
+
+        if ($request->photo) {
+            if(request()->hasFile('photo')){
+            $uploadedFile  =  $request->file('photo');
+            $nomFichierUnique   =   '/img/personnes/' . str_replace('   ',   '_',   $personne->nom)   .   '-'   .   uniqid()   .   '.'   .   $uploadedFile->extension();
+            try {
+                $request->photo->move(public_path('img/personnes'),  $nomFichierUnique);
+                File::delete(public_path() . $personne->photo);
+            } catch (\Symfony\Component\HttpFoundation\File\Exception\FileException  $e) {
+                Log::error("Erreur  lors  du  téléversement  du  fichier.  ",  [$e]);
+            }
+
+            $personne->photo  =  $nomFichierUnique;
+        }
+        else {
+            die('No file uploaded');
+        }
+        }
+
         $personne->save();
         return redirect()->route('personnes.index');
     }

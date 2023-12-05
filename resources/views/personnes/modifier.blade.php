@@ -9,7 +9,7 @@
     <div id="container" class="container-fluid">
         <div class="row text-center ">
             <div class="col-6 offset-3 ">
-                <form action="{{ route('personnes.patch', $personne->id) }}" method="POST">
+                <form action="{{ route('personnes.patch', $personne->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
                     <label for="nom">Nom</label>
@@ -21,8 +21,12 @@
                         <option @if($personne->sexe === 'm') selected @endif value="m">Homme</option>
                         <option @if($personne->sexe === 'f') selected @endif value="f">Femme</option>
                     </select>
-                    <label for="photo">Lien de la photo</label>
-                    <input type="text" class="form-control" placeholder="Photo" name="photo" value="{{ $personne->photo }}">
+                    <div class="form-group">
+                        <label for="imageID">Sélectionner l'image</label> <br>
+                        <input type="file" class="form-control-file" id="imageID" name="photo">
+                    </div>
+                    {{-- <label for="photo">Lien de la photo</label>
+                    <input type="text" class="form-control" placeholder="Photo" name="photo" value="{{ $personne->photo }}"> --}}
 
                     <div class="d-flex flex-row justify-content-center mt-1">
                         <input class="form-check-input " name="realisateur" @if($personne->realisateur == 1) checked @endif type="checkbox" value="1" id="realisateur">

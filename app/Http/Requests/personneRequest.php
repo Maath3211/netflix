@@ -25,14 +25,14 @@ class personneRequest extends FormRequest
             'nom' => 'required',
             'date' => 'required',
             'sexe' => 'required',
-            'photo' => 'required|url'
+            'photo' => 'required|image|mimes:png,jpeg,jpg,gif|max:4096',
+            
         ];
     }
     public function messages(){
         return [
         'nom.required' => "Le nom est obligatoire",
         'date.required' => "La date est obligatoire",
-        'photo.required' => "La photo est obligatoire"
         ];
     }
 }

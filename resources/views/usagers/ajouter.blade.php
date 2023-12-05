@@ -14,7 +14,7 @@
             <div class="row">
                 <div class="col-3 offset-3">
 
-                    <form action="{{ route('usagers.store') }}" method="post">
+                    <form action="{{ route('usagers.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
                         <label for="email">Email</label>
                         <input type="text" class="form-control" placeholder="Email" name="email"
@@ -28,6 +28,11 @@
                         <label for="username">Nom d'utilisateur</label>
                         <input type="text" class="form-control" placeholder="Nom d'utilisateur" name="nomUsager"
                             value="{{ old('username') }}">
+
+                            <div class="form-group">
+                                <label for="imageID">Sélectionner l'image</label>
+                                <input type="file" class="form-control-file" id="imageID" name="image">
+                            </div>
                 </div>
 
                 <div class="col-3">
@@ -43,6 +48,9 @@
                         <option value="normal">Normal</option>
                         <option value="kid">Enfant</option>
                     </select>
+
+                    
+
                     <br>
 
                     <div class="row text-center">

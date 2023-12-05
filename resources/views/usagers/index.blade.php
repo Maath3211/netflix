@@ -14,7 +14,7 @@
         <form method="POST" action="{{ route('login') }}">
             @csrf
           <div class="user-box">
-            <input type="text" name="email">
+            <input type="email" name="email">
             <label>Email</label>
           </div>
           <div class="user-box">

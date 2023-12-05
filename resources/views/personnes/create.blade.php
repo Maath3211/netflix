@@ -10,7 +10,7 @@
         @csrf
         <div class="row text-center ">
             <div class="col-6 offset-3 ">
-                <form method="POST" action="{{ route('personnes.store') }}">
+                <form method="POST" action="{{ route('personnes.store') }}" enctype="multipart/form-data">
                     @csrf
                     <label for="nom">Nom</label>
                     <input type="text" class="form-control" placeholder="Nom" name="nom" value="{{ old('nom') }}">
@@ -21,8 +21,14 @@
                         <option value="m">Homme</option>
                         <option value="f">Femme</option>
                     </select>
-                    <label for="photo">Lien de la photo</label>
-                    <input type="text" class="form-control" placeholder="Photo" name="photo" value="{{ old('photo') }}">
+
+                    <div class="form-group">
+                        <label for="imageID">Sélectionner l'image</label> <br>
+                        <input type="file" class="form-control-file" id="imageID" name="photo">
+                    </div>
+                    
+                 {{--    <label for="photo">Lien de la photo</label>
+                    <input type="text" class="form-control" placeholder="Photo" name="photo" value="{{ old('photo') }}"> --}}
 
                     <div class="d-flex flex-row justify-content-center mt-1">
                         <input class="form-check-input " name="realisateur" type="checkbox" value="1" id="realisateur">
@@ -38,6 +44,8 @@
                         <input class="form-check-input" name="acteur" type="checkbox" value="1" id="acteur">
                         <label for="acteur">Acteur</label>
                     </div>
+
+                    
                     <br>
                     <button type="submit" class="btn btn-success">Enregistrer</button>
                 </form>
