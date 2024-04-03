@@ -188,10 +188,16 @@
                 </div>
             </div>
         @endrole
-
-
-
-
+        <div class="container">
+            <div class="row">
+                <div class="col-1 offset-11">
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+                        <button type="submit" class="btn btn-danger">Logout</button>
+                    </form>
+                </div>
+            </div>
+        </div>
     @endauth
 
 @endsection

@@ -28,7 +28,7 @@ class usagerRequest extends FormRequest
                 'prenom' => 'required',
                 'role' => 'required',
                 'password' => 'sometimes|required',
-                'image' => 'required|image|mimes:png,jpeg,jpg,gif|max:4096',
+                'image' => 'required|image|mimes:png,jpeg,jpg|max:4096',
             ];
     }
 }

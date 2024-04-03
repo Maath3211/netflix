@@ -67,19 +67,22 @@ Route::post('/logout',
 [UsagersController::class, 'logout'])->name('logout');
 
 Route::get('/createaccount',
-[UsagersController::class, 'create'])->name('usagers.create');
+[UsagersController::class, 'create'])->name('usagers.create')->middleware('CheckRole:admin');
 
 Route::post('/storeaccount',
-[UsagersController::class, 'store'])->name('usagers.store');
+[UsagersController::class, 'store'])->name('usagers.store')->middleware('CheckRole:admin');
 
 Route::get('/editaccount/{usager}',
-[UsagersController::class, 'edit'])->name('usagers.edit');
+[UsagersController::class, 'edit'])->name('usagers.edit')->middleware('CheckRole:admin');
 
 Route::patch('/editAccount/{usager}',
-[UsagersController::class, 'update'])->name('usagers.update');
+[UsagersController::class, 'update'])->name('usagers.update')->middleware('CheckRole:admin');
 
 Route::patch('/editAccountNormal/{usager}',
-[UsagersController::class, 'updateNormal'])->name('usagers.updateNormal');
+[UsagersController::class, 'updateNormal'])->name('usagers.updateNormal')->middleware('CheckRole:admin');
 
 Route::delete('/destroyaccount/{usager}',
-[UsagersController::class, 'destroy'])->name('usagers.destroy');
+[UsagersController::class, 'destroy'])->name('usagers.destroy')->middleware('CheckRole:admin');
+
+Route::delete('/relation/delete/{personne}/{film}',
+[PersonnesController::class, 'suppRelation'])->name('relation.destroy')->middleware('CheckRole:admin');

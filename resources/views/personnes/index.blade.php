@@ -4,14 +4,35 @@
 
     @auth
 
+    <section class="main-container">
 
 
+    <h1></h1>
+        <div id="container" class="container-fluid ">
+            <div class="row text-center ">
+                <div class="col-4 offset-4">
+                    
+                    @if (session('success'))
+                <div class="alert alert-success">
+                    {{ session('success') }}
+                </div>
+            @endif
 
-        <br>
+            @if (isset($errors) && $errors->any())
+                <div class="alert alert-danger">
+                    @foreach ($errors->all() as $error)
+                        <p>{{ $error }}</p>
+                    @endforeach
+                </div>
+            @endif
 
-        <section class="main-container">
+                </div>
+            </div>
+        </div>
 
-            <label class="mt-5" for="tri">Trier par</label>
+        
+
+            <label  for="tri">Trier par</label>
             <div id="tri_ajout">
 
 
@@ -66,85 +87,85 @@
                             @endforeach
                         @endif
                     </div>
-                    @break
+                @break
 
-                    <!-------------------------------------------------------------->
-                    @case(2)
-                        <p class="h1 mt-3">Homme</p>
-                        <div class="box">
+                <!-------------------------------------------------------------->
+                @case(2)
+                    <p class="h1 mt-3">Homme</p>
+                    <div class="box">
 
-                            @if (count($personnes))
-                                @foreach ($personnes as $personne)
-                                    @if ($personne->sexe === 'm')
-                                        <p>{{ $personne->nom }}
-                                            <a href="{{ route('personnes.show', $personne->id) }}"><img src="{{ $personne->photo }}"
-                                                    class="max300" alt=""></a>
-                                        </p>
-                                    @endif
-                                @endforeach
-                            @endif
-                        </div>
-                        <p class="h1 mt-3">Femme</p>
-                        <div class="box">
+                        @if (count($personnes))
+                            @foreach ($personnes as $personne)
+                                @if ($personne->sexe === 'm')
+                                    <p>{{ $personne->nom }}
+                                        <a href="{{ route('personnes.show', $personne->id) }}"><img src="{{ $personne->photo }}"
+                                                class="max300" alt=""></a>
+                                    </p>
+                                @endif
+                            @endforeach
+                        @endif
+                    </div>
+                    <p class="h1 mt-3">Femme</p>
+                    <div class="box">
 
-                            @if (count($personnes))
-                                @foreach ($personnes as $personne)
-                                    @if ($personne->sexe === 'f')
-                                        <p>{{ $personne->nom }}
-                                            <a href="{{ route('personnes.show', $personne->id) }}"><img src="{{ $personne->photo }}"
-                                                    class="max300" alt=""></a>
-                                        </p>
-                                    @endif
-                                @endforeach
-                            @endif
-                        </div>
-                    @break
+                        @if (count($personnes))
+                            @foreach ($personnes as $personne)
+                                @if ($personne->sexe === 'f')
+                                    <p>{{ $personne->nom }}
+                                        <a href="{{ route('personnes.show', $personne->id) }}"><img src="{{ $personne->photo }}"
+                                                class="max300" alt=""></a>
+                                    </p>
+                                @endif
+                            @endforeach
+                        @endif
+                    </div>
+                @break
 
-                    <!-------------------------------------------------------------->
-                    @case(3)
-                        <h1>Acteurs</h1>
-                        <div class="box">
-                            @if (count($personnes))
-                                @foreach ($personnes as $personne)
-                                    @if ($personne->acteur == 1)
-                                        <p>{{ $personne->nom }}
-                                            <a href="{{ route('personnes.show', $personne->id) }}"><img src="{{ $personne->photo }}"
-                                                    class="max300" alt=""></a>
-                                        </p>
-                                    @endif
-                                @endforeach
-                            @endif
-                        </div>
+                <!-------------------------------------------------------------->
+                @case(3)
+                    <h1>Acteurs</h1>
+                    <div class="box">
+                        @if (count($personnes))
+                            @foreach ($personnes as $personne)
+                                @if ($personne->acteur == 1)
+                                    <p>{{ $personne->nom }}
+                                        <a href="{{ route('personnes.show', $personne->id) }}"><img src="{{ $personne->photo }}"
+                                                class="max300" alt=""></a>
+                                    </p>
+                                @endif
+                            @endforeach
+                        @endif
+                    </div>
 
-                        <h1>Producteur</h1>
-                        <div class="box">
-                            @if (count($personnes))
-                                @foreach ($personnes as $personne)
-                                    @if ($personne->producteur == 1)
-                                        <p>{{ $personne->nom }}
-                                            <a href="{{ route('personnes.show', $personne->id) }}"><img src="{{ $personne->photo }}"
-                                                    class="max300" alt=""></a>
-                                        </p>
-                                    @endif
-                                @endforeach
-                            @endif
-                        </div>
+                    <h1>Producteur</h1>
+                    <div class="box">
+                        @if (count($personnes))
+                            @foreach ($personnes as $personne)
+                                @if ($personne->producteur == 1)
+                                    <p>{{ $personne->nom }}
+                                        <a href="{{ route('personnes.show', $personne->id) }}"><img src="{{ $personne->photo }}"
+                                                class="max300" alt=""></a>
+                                    </p>
+                                @endif
+                            @endforeach
+                        @endif
+                    </div>
 
-                        <h1>Réalisateur</h1>
-                        <div class="box">
-                            @if (count($personnes))
-                                @foreach ($personnes as $personne)
-                                    @if ($personne->realisateur == 1)
-                                        <p>{{ $personne->nom }}
-                                            <a href="{{ route('personnes.show', $personne->id) }}"><img src="{{ $personne->photo }}"
-                                                    class="max300" alt=""></a>
-                                        </p>
-                                    @endif
-                                @endforeach
-                            @endif
-                        </div>
-                    @break
-                @endswitch
+                    <h1>Réalisateur</h1>
+                    <div class="box">
+                        @if (count($personnes))
+                            @foreach ($personnes as $personne)
+                                @if ($personne->realisateur == 1)
+                                    <p>{{ $personne->nom }}
+                                        <a href="{{ route('personnes.show', $personne->id) }}"><img src="{{ $personne->photo }}"
+                                                class="max300" alt=""></a>
+                                    </p>
+                                @endif
+                            @endforeach
+                        @endif
+                    </div>
+                @break
+            @endswitch
 
 
 

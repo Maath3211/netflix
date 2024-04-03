@@ -52,7 +52,7 @@ class PersonnesController extends Controller
             Log::debug($e);
             return redirect()->back()->withInput()->withErrors(['error' => "Une erreur s'est produite pendant l'ajout de la personne"]);
         }
-        return redirect()->route('personnes.index');
+        return redirect()->route('personnes.index')->with('success','L\'ajout à été enregistré avec succès');
     }
 
     /**
@@ -89,25 +89,24 @@ class PersonnesController extends Controller
         $personne->acteur = $request->acteur == 1 ? $request->acteur : 0;
 
         if ($request->photo) {
-            if(request()->hasFile('photo')){
-            $uploadedFile  =  $request->file('photo');
-            $nomFichierUnique   =   '/img/personnes/' . str_replace('   ',   '_',   $personne->nom)   .   '-'   .   uniqid()   .   '.'   .   $uploadedFile->extension();
-            try {
-                $request->photo->move(public_path('img/personnes'),  $nomFichierUnique);
-                File::delete(public_path() . $personne->photo);
-            } catch (\Symfony\Component\HttpFoundation\File\Exception\FileException  $e) {
-                Log::error("Erreur  lors  du  téléversement  du  fichier.  ",  [$e]);
-            }
+            if (request()->hasFile('photo')) {
+                $uploadedFile  =  $request->file('photo');
+                $nomFichierUnique   =   '/img/personnes/' . str_replace('   ',   '_',   $personne->nom)   .   '-'   .   uniqid()   .   '.'   .   $uploadedFile->extension();
+                try {
+                    $request->photo->move(public_path('img/personnes'),  $nomFichierUnique);
+                    File::delete(public_path() . $personne->photo);
+                } catch (\Symfony\Component\HttpFoundation\File\Exception\FileException  $e) {
+                    Log::error("Erreur  lors  du  téléversement  du  fichier.  ",  [$e]);
+                }
 
-            $personne->photo  =  $nomFichierUnique;
-        }
-        else {
-            die('No file uploaded');
-        }
+                $personne->photo  =  $nomFichierUnique;
+            } else {
+                die('No file uploaded');
+            }
         }
 
         $personne->save();
-        return redirect()->route('personnes.index');
+        return redirect()->route('personnes.index')->with('success','La modification à été enregistré');
     }
 
     /**
@@ -119,19 +118,14 @@ class PersonnesController extends Controller
             $personne = Personne::findOrFail($id);
             //$personne->films()->detach();
             $personne->delete();
-            return redirect()->route('personnes.index')->with('message', 'Personne supprimée');
+            return redirect()->route('personnes.index')->with('success', 'Personne supprimée');
         } catch (\Exception $e) {
             Log::debug($e);
             return redirect()->route('personnes.index')->withErrors(['La suppression a échoué' . $e->getMessage()]);
         }
     }
 
-    public function relation()
-    {
-        $personnes = Personne::all();
-        $films = Film::all();
-        return view('personnes.relation', compact('personnes', 'films'));
-    }
+    
 
 
     public function storePersonne(Request $request)
@@ -147,7 +141,7 @@ class PersonnesController extends Controller
                 $film->acteurs()->attach($personne);
             }
             $film->save();
-            return redirect()->route("personnes.index")->with("message", "Relation OK");
+            return redirect()->route("personnes.index")->with("success", "Relation ajouté");
         } catch (\Throwable $e) {
             Log::debug($e);
             return redirect()->route("personnes.index")->withErrors(["Relation Bogue!" . $e->getMessage()]);
@@ -158,5 +152,19 @@ class PersonnesController extends Controller
     {
         $personne = Personne::findOrFail($id);
         return response()->json(['link' => $personne->photo]);
+    }
+    public function relation()
+    {
+        $personnes = Personne::all();
+        $films = Film::all();
+        return view('personnes.relation', compact('personnes', 'films'));
+    }
+
+    public function suppRelation($personneId, $filmId)
+    {
+        $personne = Personne::find($personneId);
+        $personne->films()->detach($filmId);
+
+        return redirect()->route('personnes.show', $personneId)->with('success', 'Film détaché avec succès.');
     }
 }

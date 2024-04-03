@@ -38,10 +38,6 @@
                 @endrole
             </nav>
             <nav class="sub-nav">
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit" class="btn btn-danger">Logout</button>
-                </form>
                 <a href="#"><i class="fas fa-search sub-nav-logo"></i></a>
                 <a href="#"><i class="fas fa-bell sub-nav-logo"></i></a>
                 <a href="/account">Account</a>
@@ -49,21 +45,8 @@
         </header>
         <!-- END OF HEADER -->
 
-        <h1></h1>
-        <div id="container" class="container-fluid ">
-            <div class="row text-center ">
-                <div class="col-2 offset-5">
-                    @if (isset($errors) && $errors->any())
-                        <div class="alert alert-danger">
-                            @foreach ($errors->all() as $error)
-                                <p>{{ $error }}</p>
-                            @endforeach
-                        </div>
-                    @endif
-
-                </div>
-            </div>
-        </div>
+        
+        
 
 
         @yield('contenu')

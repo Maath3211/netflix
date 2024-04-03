@@ -2,16 +2,13 @@
 @section('title', 'Netflix')
 @section('contenu')
 
-    <br>
-    <br>
-    <br>
-
     <div id="container" class="container-fluid">
         <div class="row text-center ">
             <div class="col-3">
                 <img src="" class="img-fluid" id="relationPer" alt="">
             </div>
             <div class="col-6">
+                <h1 class="text-success">Ajout</h1>
                 <form method="POST" action="{{ route('personnes.storePersonne') }}">
                     @csrf
                     <label for="personne">Personne</label>
@@ -38,6 +35,7 @@
                 <img src="" class="img-fluid" id="relationFilm" alt="">
             </div>
         </div>
+
 
 
 
